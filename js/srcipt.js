@@ -39,21 +39,43 @@ const handlePause = () => {
 };
 
 const handleStop = () => {
-	clearInterval(countTime);
+	// clearInterval(countTime);
+	time.innerHTML = `Ostatni czas: ${stopwatch.textContent}`;
 
 	if (stopwatch.textContent !== '0:00') {
+		time.style.visibility = 'visible';
 		timeArr.push(stopwatch.textContent);
 		console.log(timeArr);
 	}
 
-	time.innerText = `Ostatni czas: ${stopwatch.textContent}`;
-	stopwatch.textContent = `0:00`;
-	time.style.visibility = 'visible';
+	clearStuff();
+};
+const handleClear = () => {
+	time.style.visibility = 'hidden';
+	timeArr = [];
+	clearStuff();
+};
+
+const clearStuff = () => {
 	seconds = 0;
 	minutes = 0;
 	timeList.textContent = '';
+	clearInterval(countTime);
+	stopwatch.textContent = `0:00`;
 };
+const showHistory = () => {
+	timeList.textContent = '';
+	let num = 1;
+	timeArr.forEach(time => {
+		const newTime = document.createElement('li');
+		newTime.innerHTML = `Pomiar nr ${num++}: <span>${time}</span>`
+		timeList.append(newTime)
+	})
+}
+
 
 startBtn.addEventListener('click', handleStart);
 pauseBtn.addEventListener('click', handlePause);
 stopBtn.addEventListener('click', handleStop);
+resetBtn.addEventListener('click', handleClear);
+historyBtn.addEventListener('click', showHistory)
