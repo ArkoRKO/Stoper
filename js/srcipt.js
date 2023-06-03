@@ -45,7 +45,6 @@ const handleStop = () => {
 	if (stopwatch.textContent !== '0:00') {
 		time.style.visibility = 'visible';
 		timeArr.push(stopwatch.textContent);
-		console.log(timeArr);
 	}
 
 	clearStuff();
@@ -66,16 +65,33 @@ const clearStuff = () => {
 const showHistory = () => {
 	timeList.textContent = '';
 	let num = 1;
-	timeArr.forEach(time => {
+	timeArr.forEach((time) => {
 		const newTime = document.createElement('li');
-		newTime.innerHTML = `Pomiar nr ${num++}: <span>${time}</span>`
-		timeList.append(newTime)
-	})
-}
+		newTime.innerHTML = `Pomiar nr ${num++}: <span>${time}</span>`;
+		timeList.append(newTime);
+	});
+};
+
+const showModal = () => {
+	modalShadow.style.display = 'block';
+	modalShadow.classList.toggle('modal-animation');
+};
+const closeModal = () => {
+	modalShadow.style.display = 'none';
+	modalShadow.classList.remove('modal-animation');
+};
 
 
 startBtn.addEventListener('click', handleStart);
 pauseBtn.addEventListener('click', handlePause);
 stopBtn.addEventListener('click', handleStop);
 resetBtn.addEventListener('click', handleClear);
-historyBtn.addEventListener('click', showHistory)
+historyBtn.addEventListener('click', showHistory);
+infoBtn.addEventListener('click', showModal);
+closeModalBtn.addEventListener('click', closeModal);
+window.addEventListener('keydown', e => {
+	if (e.key === 'Escape') {
+		modalShadow.style.display = 'none';
+		modalShadow.classList.remove('modal-animation');
+	}
+});
